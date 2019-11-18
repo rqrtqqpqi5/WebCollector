@@ -18,8 +18,6 @@
 package cn.edu.hfut.dmic.webcollector.model;
 
 import cn.edu.hfut.dmic.webcollector.util.CrawlDatumFormater;
-import cn.edu.hfut.dmic.webcollector.util.GsonUtils;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
@@ -37,10 +35,9 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
     public final static int STATUS_DB_UNEXECUTED = 0;
     public final static int STATUS_DB_FAILED = 1;
     public final static int STATUS_DB_SUCCESS = 5;
-
+    public static final String META_KEY_TYPE = "s_t";
     private String url = null;
     private long executeTime = System.currentTimeMillis();
-
     //private int httpCode = -1;
     private int status = STATUS_DB_UNEXECUTED;
     private int executeCount = 0;
@@ -50,7 +47,6 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
      * 因此如果不设置key，爬虫会将URL当做key作为去重标准
      */
     private String key = null;
-
     /**
      * 在WebCollector 2.5之后，可以为每个CrawlDatum添加附加信息metaData
      * 附加信息并不是为了持久化数据，而是为了能够更好地定制爬取任务
@@ -64,30 +60,11 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
     public CrawlDatum(String url) {
         this.url = url;
     }
-    
-     public CrawlDatum(String url,String type) {
+
+    public CrawlDatum(String url, String type) {
         this.url = url;
         type(type);
     }
-     
-    public boolean matchType(String type){
-        if(type==null){
-            return type()==null;
-        }else{
-            return type.equals(type());
-        }
-    }
-    
-        /**
-     * 判断当前Page的URL是否和输入正则匹配
-     *
-     * @param urlRegex
-     * @return
-     */
-    public boolean matchUrl(String urlRegex) {
-        return Pattern.matches(urlRegex, url());
-    }
-
 
     public CrawlDatum(String url, String[] metas) throws Exception {
         this(url);
@@ -100,19 +77,34 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
         }
     }
 
+    public boolean matchType(String type) {
+        if (type == null) {
+            return type() == null;
+        } else {
+            return type.equals(type());
+        }
+    }
+
+    /**
+     * 判断当前Page的URL是否和输入正则匹配
+     *
+     * @param urlRegex
+     * @return
+     */
+    public boolean matchUrl(String urlRegex) {
+        return Pattern.matches(urlRegex, url());
+    }
 
     public int incrExecuteCount(int count) {
-        executeCount+=count;
+        executeCount += count;
         return executeCount;
     }
-    
-    public static final String META_KEY_TYPE="s_t";
-    
-    public String type(){
+
+    public String type() {
         return meta(META_KEY_TYPE);
     }
-    
-    public CrawlDatum type(String type){
+
+    public CrawlDatum type(String type) {
         return meta(META_KEY_TYPE, type);
     }
 
@@ -120,7 +112,7 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
     public String url() {
         return url;
     }
-    
+
     public CrawlDatum url(String url) {
         this.url = url;
         return this;
@@ -137,7 +129,7 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
     /**
      * @deprecated 使用url(String url)代替
      */
-   @Deprecated
+    @Deprecated
     public CrawlDatum setUrl(String url) {
         return url(url);
     }
@@ -167,7 +159,6 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
     }
 
 
-
 //
 //    public void meta(Document metaData) {
 //        this.metaData = metaData;
@@ -184,14 +175,15 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
     public JsonObject meta() {
         return metaData;
     }
+
     @Override
-    public String meta(String key){
+    public String meta(String key) {
         JsonElement value = metaData.get(key);
-        return (value==null || (value instanceof JsonNull))?null:value.getAsString();
+        return (value == null || (value instanceof JsonNull)) ? null : value.getAsString();
     }
 
     @Override
-    public int metaAsInt(String key){
+    public int metaAsInt(String key) {
         return metaData.get(key).getAsInt();
     }
 
@@ -221,25 +213,22 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
 //        return meta(key);
 //    }
 
-    public String briefInfo(){
-        return String.format("CrawlDatum: %s (URL: %s)",key(),url());
+    public String briefInfo() {
+        return String.format("CrawlDatum: %s (URL: %s)", key(), url());
     }
-    
-     public String key() {
+
+    public String key() {
         if (key == null) {
             return url;
         } else {
             return key;
         }
     }
-     
-     public CrawlDatum key(String key) {
+
+    public CrawlDatum key(String key) {
         this.key = key;
         return this;
     }
-
-
-
 
 
     @Override

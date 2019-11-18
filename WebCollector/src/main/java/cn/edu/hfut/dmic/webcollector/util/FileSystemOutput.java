@@ -18,10 +18,11 @@
 package cn.edu.hfut.dmic.webcollector.util;
 
 import cn.edu.hfut.dmic.webcollector.model.Page;
-import java.io.File;
-import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.net.URL;
 
 /**
  * FileSystemOutput并不属于WebCollector内核，它只是实现一个 简单的输出，将网页根据url路径，保存到本地目录，按照网站目录
@@ -70,6 +71,6 @@ public class FileSystemOutput {
             LOG.info("Exception", ex);
         }
     }
-    
+
 
 }

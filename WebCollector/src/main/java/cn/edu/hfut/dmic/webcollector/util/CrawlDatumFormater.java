@@ -18,15 +18,13 @@
 package cn.edu.hfut.dmic.webcollector.util;
 
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map.Entry;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 
 /**
@@ -60,7 +58,7 @@ public class CrawlDatumFormater {
         int metaIndex = 0;
 
 
-        for(Entry<String, JsonElement> entry: datum.meta().entrySet()){
+        for (Entry<String, JsonElement> entry : datum.meta().entrySet()) {
             sb.append("\nMETA").append("[").append(metaIndex++).append("]:(")
                     .append(entry.getKey()).append(",").append(entry.getValue()).append(")");
         }

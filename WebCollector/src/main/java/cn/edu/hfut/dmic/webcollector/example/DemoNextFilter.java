@@ -31,7 +31,7 @@ import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
  * DB（BreadthCrawler)的插件：适合处理长期和大量级的任务，并具有断点爬取功能，不会因为宕机、关闭导致数据丢失。
  * 6）集成selenium，可以对javascript生成信息进行抽取 7）可轻松自定义http请求，并内置多代理随机切换功能。
  * 可通过定义http请求实现模拟登录。 8）使用slf4j作为日志门面，可对接多种日志
- *
+ * <p>
  * 可在cn.edu.hfut.dmic.webcollector.example包中找到例子(Demo)
  *
  * @author hu
@@ -49,25 +49,6 @@ public class DemoNextFilter extends BreadthCrawler {
         setThreads(30);
     }
 
-    /*
-        可以往next中添加希望后续爬取的任务，任务可以是URL或者CrawlDatum
-        爬虫不会重复爬取任务，从2.20版之后，爬虫根据CrawlDatum的key去重，而不是URL
-        因此如果希望重复爬取某个URL，只要将CrawlDatum的key设置为一个历史中不存在的值即可
-        例如增量爬取，可以使用 爬取时间+URL作为key。
-    
-        新版本中，可以直接通过 page.select(css选择器)方法来抽取网页中的信息，等价于
-        page.getDoc().select(css选择器)方法，page.getDoc()获取到的是Jsoup中的
-        Document对象，细节请参考Jsoup教程
-     */
-    @Override
-    public void visit(Page page, CrawlDatums next) {
-        if (page.matchType("content")) {
-            String title = page.select("div[class=article_title]").first().text();
-            String author = page.select("div[id=blog_userface]").first().text();
-            System.out.println("title:" + title + "\tauthor:" + author);
-        }
-    }
-
     public static void main(String[] args) throws Exception {
         DemoNextFilter crawler = new DemoNextFilter("crawl", true);
         crawler.setNextFilter(new NextFilter() {
@@ -82,6 +63,25 @@ public class DemoNextFilter extends BreadthCrawler {
             }
         });
         crawler.start(2);
+    }
+
+    /*
+        可以往next中添加希望后续爬取的任务，任务可以是URL或者CrawlDatum
+        爬虫不会重复爬取任务，从2.20版之后，爬虫根据CrawlDatum的key去重，而不是URL
+        因此如果希望重复爬取某个URL，只要将CrawlDatum的key设置为一个历史中不存在的值即可
+        例如增量爬取，可以使用 爬取时间+URL作为key。
+
+        新版本中，可以直接通过 page.select(css选择器)方法来抽取网页中的信息，等价于
+        page.getDoc().select(css选择器)方法，page.getDoc()获取到的是Jsoup中的
+        Document对象，细节请参考Jsoup教程
+     */
+    @Override
+    public void visit(Page page, CrawlDatums next) {
+        if (page.matchType("content")) {
+            String title = page.select("div[class=article_title]").first().text();
+            String author = page.select("div[id=blog_userface]").first().text();
+            System.out.println("title:" + title + "\tauthor:" + author);
+        }
     }
 
 }

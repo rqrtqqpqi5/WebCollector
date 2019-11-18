@@ -21,7 +21,6 @@ import cn.edu.hfut.dmic.webcollector.crawler.Crawler;
 import cn.edu.hfut.dmic.webcollector.fetcher.Executor;
 
 /**
- *
  * @author hu
  */
 public class BerkeleyCrawler extends Crawler {

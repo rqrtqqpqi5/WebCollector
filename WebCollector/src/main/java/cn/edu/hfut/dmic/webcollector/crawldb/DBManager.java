@@ -24,10 +24,9 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.util.ConfigurationUtils;
 
 /**
- *
  * @author hu
  */
-public abstract class DBManager extends DefaultConfigured implements Injector, SegmentWriter{
+public abstract class DBManager extends DefaultConfigured implements Injector, SegmentWriter {
 
     public abstract boolean isDBExists();
 
@@ -35,7 +34,7 @@ public abstract class DBManager extends DefaultConfigured implements Injector, S
 
     public abstract Generator createGenerator();
 
-    public Generator createGenerator(GeneratorFilter generatorFilter){
+    public Generator createGenerator(GeneratorFilter generatorFilter) {
         Generator generator = createGenerator();
         generator.setFilter(generatorFilter);
 

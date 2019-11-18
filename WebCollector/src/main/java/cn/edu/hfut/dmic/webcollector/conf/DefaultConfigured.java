@@ -20,7 +20,7 @@ package cn.edu.hfut.dmic.webcollector.conf;
 /**
  * @author hu
  */
-public class DefaultConfigured extends CommonConfigured{
+public class DefaultConfigured extends CommonConfigured {
     public DefaultConfigured() {
         setConf(Configuration.getDefault());
     }

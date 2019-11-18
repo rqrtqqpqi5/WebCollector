@@ -21,24 +21,23 @@ import cn.edu.hfut.dmic.webcollector.crawldb.DBManager;
 import cn.edu.hfut.dmic.webcollector.crawldb.Generator;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
-import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map.Entry;
+
 /**
- *
  * @author hu
  */
 public class RamDBManager extends DBManager {
 
-    Logger LOG = LoggerFactory.getLogger(DBManager.class);
-
     public RamDB ramDB;
-    public RamGenerator generator=null;
+    public RamGenerator generator = null;
+    Logger LOG = LoggerFactory.getLogger(DBManager.class);
 
     public RamDBManager(RamDB ramDB) {
         this.ramDB = ramDB;
-        this.generator=new RamGenerator(ramDB);
+        this.generator = new RamGenerator(ramDB);
     }
 
     @Override
@@ -78,11 +77,11 @@ public class RamDBManager extends DBManager {
         }
         ramDB.crawlDB.put(key, datum);
     }
-    
+
     @Override
     public void inject(CrawlDatums datums, boolean force) throws Exception {
-        for(CrawlDatum datum:datums){
-            inject(datum,force);
+        for (CrawlDatum datum : datums) {
+            inject(datum, force);
         }
     }
 
@@ -132,5 +131,5 @@ public class RamDBManager extends DBManager {
     @Override
     public void closeSegmentWriter() throws Exception {
     }
- 
+
 }

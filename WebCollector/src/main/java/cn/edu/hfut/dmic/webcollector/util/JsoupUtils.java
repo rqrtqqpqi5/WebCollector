@@ -24,27 +24,26 @@ import org.jsoup.nodes.Node;
 import org.jsoup.select.NodeVisitor;
 
 /**
- *
  * @author hu
  */
 public class JsoupUtils {
-    public static void makeAbs(Document doc,String url){
-        if(url!=null){
+    public static void makeAbs(Document doc, String url) {
+        if (url != null) {
             doc.setBaseUri(url);
         }
         doc.traverse(new NodeVisitor() {
 
             @Override
             public void head(Node node, int i) {
-                if(node instanceof Element){
-                    Element tag=(Element) node;
-                    if(tag.hasAttr("href")){
-                        String absHref=tag.attr("abs:href");
-                        tag.attr("href",absHref);
+                if (node instanceof Element) {
+                    Element tag = (Element) node;
+                    if (tag.hasAttr("href")) {
+                        String absHref = tag.attr("abs:href");
+                        tag.attr("href", absHref);
                     }
-                    if(tag.hasAttr("src")){
-                        String absSrc=tag.attr("abs:src");
-                        tag.attr("src",absSrc);
+                    if (tag.hasAttr("src")) {
+                        String absSrc = tag.attr("abs:src");
+                        tag.attr("src", absSrc);
                     }
                 }
             }

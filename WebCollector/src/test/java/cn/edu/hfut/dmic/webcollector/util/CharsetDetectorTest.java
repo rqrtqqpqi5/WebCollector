@@ -22,7 +22,7 @@ import org.junit.Test;
 import java.nio.charset.Charset;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by Vlad Medvedev on 21.01.2016.

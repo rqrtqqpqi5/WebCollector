@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 public class CrawlDatumsTest {
 
     @Test
-    public void testAdd(){
+    public void testAdd() {
         CrawlDatums datums = new CrawlDatums();
 
 
@@ -42,8 +42,8 @@ public class CrawlDatumsTest {
 
 
         ArrayList<String> urlList = new ArrayList<String>();
-        for(int i = 0;i<10;i++){
-            urlList.add("https://www.google.com/"+i);
+        for (int i = 0; i < 10; i++) {
+            urlList.add("https://www.google.com/" + i);
         }
 
         returnedDatums = datums.add(urlList);
@@ -54,25 +54,25 @@ public class CrawlDatumsTest {
 
 
     @Test
-    public void testAddAndReturn(){
+    public void testAddAndReturn() {
         CrawlDatums datums = new CrawlDatums();
 
 
         String url = "http://cn.bing.com/";
 
         CrawlDatum addedDatum = datums.addAndReturn(url);
-        assertEquals(url,addedDatum.url());
+        assertEquals(url, addedDatum.url());
 
 
         ArrayList<String> urlList = new ArrayList<String>();
-        for(int i = 0;i<10;i++){
-            urlList.add("https://www.google.com/"+i);
+        for (int i = 0; i < 10; i++) {
+            urlList.add("https://www.google.com/" + i);
         }
 
         CrawlDatums addedDatums = datums.addAndReturn(urlList);
-        assertEquals(urlList.size(),addedDatums.size());
+        assertEquals(urlList.size(), addedDatums.size());
 
-        for(int i=0;i<urlList.size();i++){
+        for (int i = 0; i < urlList.size(); i++) {
             assertEquals(urlList.get(i), addedDatums.get(i).url());
         }
 

@@ -20,11 +20,8 @@ package cn.edu.hfut.dmic.webcollector.util;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
  * @author hu
  */
 public class MD5Utils {
@@ -46,7 +43,7 @@ public class MD5Utils {
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        System.out.println(md5("测试abc","utf-8"));
+        System.out.println(md5("测试abc", "utf-8"));
     }
 
 

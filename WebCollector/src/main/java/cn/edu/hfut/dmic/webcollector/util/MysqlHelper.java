@@ -17,26 +17,24 @@
  */
 package cn.edu.hfut.dmic.webcollector.util;
 
-import java.beans.PropertyVetoException;
-
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 
 /**
- *
  * @author hu
  */
 public class MysqlHelper {
 
-    DataSource dataSource;
     public JdbcTemplate template;
+    DataSource dataSource;
 
     public MysqlHelper(String url, String username, String password, int initialSize, int maxPoolSize) throws PropertyVetoException {
-        dataSource = createDataSource(url,username,password,initialSize,maxPoolSize);
+        dataSource = createDataSource(url, username, password, initialSize, maxPoolSize);
         template = new JdbcTemplate(dataSource);
-     }
+    }
 
     public DataSource createDataSource(String url, String username, String password, int initialSize, int maxPoolSize) throws PropertyVetoException {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();

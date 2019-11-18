@@ -23,11 +23,13 @@ import cn.edu.hfut.dmic.webcollector.fetcher.Executor;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BerkeleyDBManager;
-import java.util.List;
-//import org.apache.log4j.Level;
-//import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+import java.util.List;
+
+//import org.apache.log4j.Level;
+//import org.apache.log4j.Logger;
 
 
 /**
@@ -47,15 +49,15 @@ public class DemoSelenium {
         Executor executor = new Executor() {
             @Override
             public void execute(CrawlDatum datum, CrawlDatums next) throws Exception {
-                
+
                 HtmlUnitDriver driver = new HtmlUnitDriver();
                 driver.setJavascriptEnabled(true);
-                
+
                 driver.get(datum.url());
-                
+
                 List<WebElement> elementList = driver.findElementsByCssSelector("h3.vrTitle a");
-                for(WebElement element:elementList){
-                    System.out.println("title:"+element.getText());
+                for (WebElement element : elementList) {
+                    System.out.println("title:" + element.getText());
                 }
             }
         };

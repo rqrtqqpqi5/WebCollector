@@ -38,7 +38,7 @@ public class CrawlDatums implements Iterable<CrawlDatum>, MetaSetter<CrawlDatums
     public CrawlDatums(Iterable<String> links, String type) {
         add(links, type);
     }
-    
+
     public CrawlDatums(Iterable<String> links) {
         add(links);
     }
@@ -87,19 +87,19 @@ public class CrawlDatums implements Iterable<CrawlDatum>, MetaSetter<CrawlDatums
         return this;
     }
 
-    public CrawlDatum addAndReturn(String url){
+    public CrawlDatum addAndReturn(String url) {
         CrawlDatum datum = new CrawlDatum(url);
         add(datum);
         return datum;
     }
 
-    public CrawlDatums addAndReturn(Iterable<String> links){
+    public CrawlDatums addAndReturn(Iterable<String> links) {
         CrawlDatums datums = new CrawlDatums(links);
         add(datums);
         return datums;
     }
 
-    public CrawlDatums addAndReturn(CrawlDatums datums){
+    public CrawlDatums addAndReturn(CrawlDatums datums) {
         add(datums);
         return datums;
     }
@@ -116,7 +116,7 @@ public class CrawlDatums implements Iterable<CrawlDatum>, MetaSetter<CrawlDatums
 
     @Override
     public CrawlDatums meta(JsonObject metaData) {
-        for(CrawlDatum datum:dataList){
+        for (CrawlDatum datum : dataList) {
             datum.meta(metaData);
         }
         return this;

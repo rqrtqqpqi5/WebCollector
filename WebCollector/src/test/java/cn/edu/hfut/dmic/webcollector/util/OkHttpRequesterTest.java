@@ -4,13 +4,15 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.net.OkHttpRequester;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class OkHttpRequesterTest {
     OkHttpRequester requester = new OkHttpRequester();
 
     @Test
-    public void testHttpCode(){
+    public void testHttpCode() {
         String url = "http://www.hfut.edu.cn/ch/";
         try {
             Page page = requester.getResponse(new CrawlDatum(url));

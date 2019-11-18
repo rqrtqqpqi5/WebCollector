@@ -2,9 +2,128 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4013e248-0201-4b9a-9994-86d4c6f50cac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/WebCollector.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/webCollector.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebCollector/WebCollector.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/contentextractor/ContentExtractor$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/contentextractor/ContentExtractor$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/contentextractor/ContentExtractor$CountInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/contentextractor/ContentExtractor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/contentextractor/News.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/conf/CommonConfigured.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/conf/Configuration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/conf/Configured.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/conf/DefaultConfigured.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawldb/DBManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawldb/Generator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawldb/GeneratorFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawldb/Injector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawldb/SegmentWriter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawldb/StatusGeneratorFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawler/AutoParseCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/crawler/Crawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/AbuyunDynamicProxyRequester$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/AbuyunDynamicProxyRequester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoAnnotatedAutoNewsCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoAnnotatedBingCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoAnnotatedDepthCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoAnnotatedManualNewsCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoAnnotatedMatchTypeCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoAnnotatedRedirectCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoAutoNewsCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoBingCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoCookieCrawler$MyRequester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoCookieCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoExceptionCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoHashSetNextFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoManualNewsCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoMetaCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoNextFilter$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoNextFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoPostCrawler$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoPostCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoRandomProxyCrawler$MyRequester$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoRandomProxyCrawler$MyRequester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoRandomProxyCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoRedirectCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoSeleniumCrawler$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoSeleniumCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/DemoTypeCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/example/TutorialCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Executor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher$FetchItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher$FetchQueue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher$FetcherThread.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher$QueueFeeder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/NextFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$AfterParse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$BeforeVisit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$InvalidAnnotatedVisitorMethodException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$MatchCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$MatchNullType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$MatchType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$MatchUrl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor$MatchUrlRegexRule.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/Visitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/fetcher/VisitorMethodDispatcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/model/CrawlDatum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/model/CrawlDatums.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/model/Links.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/model/MetaGetter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/model/MetaSetter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/model/Page.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/net/CommonRequester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/net/Proxies.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/net/Requester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/berkeley/BerkeleyCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/berkeley/BerkeleyDBManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/berkeley/BerkeleyDBReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/berkeley/BerkeleyDBUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/berkeley/BerkeleyGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/berkeley/BreadthCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/net/OkHttpRequester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/nextfilter/HashSetNextFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/ram/RamCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/ram/RamDB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/ram/RamDBManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/ram/RamGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/rocks/BreadthCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/rocks/RocksCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/rocks/RocksDBManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/rocks/RocksDBReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/rocks/RocksDBUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/plugin/rocks/RocksGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/CharsetDetector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/ConfigurationUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/Counter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/CrawlDatumFormater.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/ExceptionUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/FileIdGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/FileSystemOutput.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/FileUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/GsonUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/JsoupUtils$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/JsoupUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/ListUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/MD5Utils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/MysqlHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/ReflectionUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cn/edu/hfut/dmic/webcollector/util/RegexRule.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/cn/edu/hfut/dmic/webcollector/util/CharsetDetectorTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/cn/edu/hfut/dmic/webcollector/util/CrawlDatumTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/cn/edu/hfut/dmic/webcollector/util/CrawlDatumsTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/cn/edu/hfut/dmic/webcollector/util/DBManagerTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/cn/edu/hfut/dmic/webcollector/util/MetaTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/cn/edu/hfut/dmic/webcollector/util/OkHttpRequesterTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webcollector-2.72-bin.zip" beforeDir="false" afterPath="$PROJECT_DIR$/webcollector-2.72-bin.zip" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="WebCollector.iml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,49 +134,65 @@
     <session id="-356122720">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="1" />
+          <entry key="java" value="3" />
           <entry key="properties" value="1" />
-          <entry key="xml" value="1" />
+          <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="1" />
+          <entry key="JAVA" value="3" />
           <entry key="Properties" value="1" />
-          <entry key="XML" value="1" />
+          <entry key="XML" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="2" />
+          <entry key="txt" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="2" />
+          <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="135">
+              <caret line="68" column="13" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher.java">
+        <entry file="file://$PROJECT_DIR$/WebCollector/src/main/java/cn/edu/hfut/dmic/webcollector/conf/CommonConfigured.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-972">
-              <folding>
-                <element signature="e#0#13830#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="27">
+              <caret line="17" column="15" lean-forward="true" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WebCollector/src/main/java/cn/edu/hfut/dmic/webcollector/conf/Configuration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-229">
+              <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -67,6 +202,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/WebCollector/src/main/java/cn/edu/hfut/dmic/webcollector/conf/CommonConfigured.java" />
+      </list>
+    </option>
+  </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
@@ -74,17 +216,20 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="974" />
-    <option name="height" value="520" />
+    <option name="x" value="295" />
+    <option name="y" value="165" />
+    <option name="width" value="1545" />
+    <option name="height" value="879" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
+      <autoscrollFromSource ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -95,69 +240,71 @@
             <path>
               <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
               <item name="webCollector" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webCollector" type="462c0819:PsiDirectoryNode" />
+              <item name="WebCollector" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webCollector" type="462c0819:PsiDirectoryNode" />
+              <item name="WebCollector" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
               <item name="webCollector" type="462c0819:PsiDirectoryNode" />
+              <item name="WebCollector" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
               <item name="webCollector" type="462c0819:PsiDirectoryNode" />
+              <item name="WebCollector" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webCollector" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="dmic" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
               <item name="webCollector" type="462c0819:PsiDirectoryNode" />
+              <item name="WebCollector" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dmic" type="462c0819:PsiDirectoryNode" />
-              <item name="webcollector" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webCollector" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="dmic" type="462c0819:PsiDirectoryNode" />
               <item name="webcollector" type="462c0819:PsiDirectoryNode" />
-              <item name="fetcher" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WebCollector" type="b2602c69:ProjectViewProjectNode" />
               <item name="webCollector" type="462c0819:PsiDirectoryNode" />
+              <item name="WebCollector" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="dmic" type="462c0819:PsiDirectoryNode" />
+              <item name="webcollector" type="462c0819:PsiDirectoryNode" />
+              <item name="conf" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebCollector" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -181,29 +328,33 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574050453979</updated>
-      <workItem from="1574050456485" duration="909000" />
+      <workItem from="1574050456485" duration="1109000" />
+      <workItem from="1574052613995" duration="274000" />
     </task>
+    <task id="LOCAL-00001" summary="s">
+      <created>1574052509764</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1574052509764</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="909000" />
+    <option name="totallyTimeSpent" value="1383000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25266525" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" weight="0.32899022" />
-      <window_info anchor="bottom" id="Spring" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.32899022" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="FindBugs-IDEA" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -211,15 +362,22 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Maven Projects" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="FindBugs-IDEA" order="7" />
+      <window_info anchor="bottom" id="Spring" order="8" weight="0.32899022" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.39630836" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32899022" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="13" weight="0.32899022" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,32 +386,117 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="s" />
+    <option name="LAST_COMMIT_MESSAGE" value="s" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher.java" />
+    <entry file="file://$PROJECT_DIR$/WebCollector/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="-1458" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebCollector/src/main/java/cn/edu/hfut/dmic/webcollector/conf/Configuration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-229">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/hfut/dmic/webcollector/fetcher/Fetcher.java">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-972">
-          <folding>
-            <element signature="e#0#13830#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="135">
+          <caret line="68" column="13" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebCollector/src/main/java/cn/edu/hfut/dmic/webcollector/conf/CommonConfigured.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="17" column="15" lean-forward="true" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
         </state>
       </provider>
     </entry>
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>webCollector</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: cglib:cglib-nodep:3.2.4</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

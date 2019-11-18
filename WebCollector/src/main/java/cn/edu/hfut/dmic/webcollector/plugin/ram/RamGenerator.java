@@ -19,31 +19,29 @@ package cn.edu.hfut.dmic.webcollector.plugin.ram;
 
 import cn.edu.hfut.dmic.webcollector.crawldb.Generator;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
-import cn.edu.hfut.dmic.webcollector.util.Config;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- *
  * @author hu
  */
 public class RamGenerator extends Generator {
 
     RamDB ramDB;
+    Iterator<Entry<String, CrawlDatum>> iterator;
 
     public RamGenerator(RamDB ramDB) {
         this.ramDB = ramDB;
         iterator = ramDB.crawlDB.entrySet().iterator();
     }
 
-    Iterator<Entry<String, CrawlDatum>> iterator;
-
     @Override
     public CrawlDatum nextWithoutFilter() throws Exception {
-        if(iterator.hasNext()){
+        if (iterator.hasNext()) {
             CrawlDatum datum = iterator.next().getValue();
             return datum;
-        }else{
+        } else {
             return null;
         }
     }

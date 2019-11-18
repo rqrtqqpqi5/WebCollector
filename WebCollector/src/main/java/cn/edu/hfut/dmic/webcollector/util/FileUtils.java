@@ -17,15 +17,9 @@
  */
 package cn.edu.hfut.dmic.webcollector.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
- *
  * @author hu
  */
 public class FileUtils {
@@ -79,8 +73,8 @@ public class FileUtils {
         fos.write(content);
         fos.close();
     }
-    
-    
+
+
     public static void write(String fileName, byte[] content) throws FileNotFoundException, IOException {
         File file = new File(fileName);
         File parent = file.getParentFile();
@@ -105,8 +99,7 @@ public class FileUtils {
     }
 
 
-    
-     public static byte[] read(File file) throws IOException {
+    public static byte[] read(File file) throws IOException {
         FileInputStream fis = new FileInputStream(file);
         byte[] buf = new byte[2048];
         int read;
@@ -141,7 +134,6 @@ public class FileUtils {
         File file = new File(fileName);
         return read(file, charset);
     }
-    
 
 
 }

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author hu
  */
-public abstract class Generator extends DefaultConfigured{
+public abstract class Generator extends DefaultConfigured {
 
     public static final Logger LOG = LoggerFactory.getLogger(Generator.class);
 
@@ -47,10 +47,11 @@ public abstract class Generator extends DefaultConfigured{
 
     /**
      * return null if there is no CrawlDatum to generate
+     *
      * @return
      */
-    public CrawlDatum next(){
-        if(topN > 0 && totalGenerate >= topN){
+    public CrawlDatum next() {
+        if (topN > 0 && totalGenerate >= topN) {
             return null;
         }
         CrawlDatum datum;
@@ -60,7 +61,7 @@ public abstract class Generator extends DefaultConfigured{
                 if (datum == null) {
                     return datum;
                 }
-                if(filter == null || (datum = filter.filter(datum))!=null){
+                if (filter == null || (datum = filter.filter(datum)) != null) {
                     if (datum.getExecuteCount() > maxExecuteCount) {
                         continue;
                     }
@@ -96,7 +97,7 @@ public abstract class Generator extends DefaultConfigured{
         this.maxExecuteCount = maxExecuteCount;
     }
 
-    public int getTotalGenerate(){
+    public int getTotalGenerate() {
         return totalGenerate;
     }
 

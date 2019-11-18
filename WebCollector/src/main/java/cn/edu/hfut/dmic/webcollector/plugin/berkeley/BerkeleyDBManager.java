@@ -23,30 +23,27 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.util.CrawlDatumFormater;
 import cn.edu.hfut.dmic.webcollector.util.FileUtils;
-import com.sleepycat.je.Cursor;
-import com.sleepycat.je.CursorConfig;
-import com.sleepycat.je.Database;
-import com.sleepycat.je.DatabaseEntry;
-import com.sleepycat.je.Environment;
-import com.sleepycat.je.EnvironmentConfig;
-import com.sleepycat.je.LockMode;
-import com.sleepycat.je.OperationStatus;
-import java.io.File;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.sleepycat.je.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
- *
  * @author hu
  */
 public class BerkeleyDBManager extends DBManager {
 
+    public int BUFFER_SIZE = 1;
     Logger LOG = LoggerFactory.getLogger(BerkeleyDBManager.class);
-
     Environment env;
     String crawlPath;
     BerkeleyGenerator generator = null;
+    Database fetchDatabase = null;
+    Database linkDatabase = null;
+    AtomicInteger count_fetch = new AtomicInteger(0);
+    AtomicInteger count_link = new AtomicInteger(0);
 
     public BerkeleyDBManager(String crawlPath) {
         this.crawlPath = crawlPath;
@@ -125,13 +122,6 @@ public class BerkeleyDBManager extends DBManager {
         env.close();
     }
 
-    public int BUFFER_SIZE = 1;
-    Database fetchDatabase = null;
-    Database linkDatabase = null;
-
-    AtomicInteger count_fetch = new AtomicInteger(0);
-    AtomicInteger count_link = new AtomicInteger(0);
-
     @Override
     public void initSegmentWriter() throws Exception {
         fetchDatabase = env.openDatabase(null, "fetch", BerkeleyDBUtils.defaultDBConfig);
@@ -162,7 +152,7 @@ public class BerkeleyDBManager extends DBManager {
         if (linkDatabase != null) {
             linkDatabase.close();
         }
-       
+
     }
 
     @Override

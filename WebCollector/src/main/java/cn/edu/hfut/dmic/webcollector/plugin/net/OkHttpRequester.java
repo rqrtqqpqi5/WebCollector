@@ -31,25 +31,29 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author hu
  */
-public class OkHttpRequester extends DefaultConfigured implements Requester{
-
+public class OkHttpRequester extends DefaultConfigured implements Requester {
 
 
     protected OkHttpClient client;
 
     protected HashSet<Integer> successCodeSet;
 
-    public OkHttpRequester addSuccessCode(int successCode){
+    public OkHttpRequester() {
+        successCodeSet = createSuccessCodeSet();
+        client = createOkHttpClientBuilder().build();
+    }
+
+    public OkHttpRequester addSuccessCode(int successCode) {
         successCodeSet.add(successCode);
         return this;
     }
-    public OkHttpRequester removeSuccessCode(int successCode){
+
+    public OkHttpRequester removeSuccessCode(int successCode) {
         successCodeSet.remove(successCode);
         return this;
     }
 
-
-    protected HashSet<Integer> createSuccessCodeSet(){
+    protected HashSet<Integer> createSuccessCodeSet() {
         HashSet<Integer> result = new HashSet<Integer>();
         result.add(200);
         result.add(301);
@@ -58,9 +62,7 @@ public class OkHttpRequester extends DefaultConfigured implements Requester{
         return result;
     }
 
-
-
-    public OkHttpClient.Builder createOkHttpClientBuilder(){
+    public OkHttpClient.Builder createOkHttpClientBuilder() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .followRedirects(false)
                 .followSslRedirects(false)
@@ -70,21 +72,16 @@ public class OkHttpRequester extends DefaultConfigured implements Requester{
 
     }
 
-    public Request.Builder createRequestBuilder(CrawlDatum crawlDatum){
+    public Request.Builder createRequestBuilder(CrawlDatum crawlDatum) {
         Request.Builder builder = new Request.Builder()
-                .header("User-Agent",getConf().getDefaultUserAgent())
+                .header("User-Agent", getConf().getDefaultUserAgent())
                 .url(crawlDatum.url());
         return builder;
     }
 
-    public OkHttpRequester() {
-        successCodeSet = createSuccessCodeSet();
-        client = createOkHttpClientBuilder().build();
-    }
-
     @Override
     public Page getResponse(CrawlDatum crawlDatum) throws Exception {
-        Request  request = createRequestBuilder(crawlDatum).build();
+        Request request = createRequestBuilder(crawlDatum).build();
         Response response = client.newCall(request).execute();
 
         String contentType = null;
@@ -93,18 +90,18 @@ public class OkHttpRequester extends DefaultConfigured implements Requester{
 
         ResponseBody responseBody = response.body();
         int code = response.code();
-        if(!successCodeSet.contains(code)){
+        if (!successCodeSet.contains(code)) {
 //            throw new IOException(String.format("Server returned HTTP response code: %d for URL: %s (CrawlDatum: %s)", code,crawlDatum.url(), crawlDatum.key()));
             throw new IOException(String.format("Server returned HTTP response code: %d for %s", code, crawlDatum.briefInfo()));
 
         }
-        if(responseBody != null){
+        if (responseBody != null) {
             content = responseBody.bytes();
             MediaType mediaType = responseBody.contentType();
-            if(mediaType!=null){
+            if (mediaType != null) {
                 contentType = mediaType.toString();
                 Charset responseCharset = mediaType.charset();
-                if(responseCharset!=null){
+                if (responseCharset != null) {
                     charset = responseCharset.name();
                 }
             }
@@ -115,7 +112,7 @@ public class OkHttpRequester extends DefaultConfigured implements Requester{
                 code,
                 contentType,
                 content
-                );
+        );
         page.charset(charset);
         page.obj(response);
         return page;

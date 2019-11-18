@@ -21,7 +21,6 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
-import cn.edu.hfut.dmic.webcollector.util.ExceptionUtils;
 
 /**
  * 本教程和深度遍历没有任何关系
@@ -51,6 +50,12 @@ public class DemoDepthCrawler extends BreadthCrawler {
 
     }
 
+    public static void main(String[] args) throws Exception {
+        DemoDepthCrawler crawler = new DemoDepthCrawler("depth_crawler", true);
+        crawler.getConf().setTopN(5);
+        crawler.start(3);
+    }
+
     @Override
     public void visit(Page page, CrawlDatums next) {
         System.out.println("visiting:" + page.url() + "\tdepth=" + page.meta("depth"));
@@ -68,13 +73,6 @@ public class DemoDepthCrawler extends BreadthCrawler {
         }
         depth++;
         next.meta("depth", depth);
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        DemoDepthCrawler crawler = new DemoDepthCrawler("depth_crawler", true);
-        crawler.getConf().setTopN(5);
-        crawler.start(3);
     }
 
 }

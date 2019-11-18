@@ -6,6 +6,7 @@ public interface GeneratorFilter {
     /**
      * return datum if you want to generate datum
      * return null if you want to filter datum
+     *
      * @param datum
      * @return
      */

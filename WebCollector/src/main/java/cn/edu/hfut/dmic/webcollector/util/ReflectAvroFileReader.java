@@ -7,7 +7,7 @@ import org.apache.avro.reflect.ReflectDatumReader;
 import java.io.File;
 import java.io.IOException;
 
-public class ReflectAvroFileReader<T>{
+public class ReflectAvroFileReader<T> {
 
     protected DataFileReader<T> reader;
 
@@ -16,11 +16,11 @@ public class ReflectAvroFileReader<T>{
         reader = new DataFileReader<T>(file, datumReader);
     }
 
-    public boolean hasNext(){
+    public boolean hasNext() {
         return reader.hasNext();
     }
 
-    public T next(){
+    public T next() {
         return reader.next();
     }
 

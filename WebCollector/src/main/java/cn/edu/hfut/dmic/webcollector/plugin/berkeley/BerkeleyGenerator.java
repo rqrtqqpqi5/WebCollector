@@ -19,18 +19,7 @@ package cn.edu.hfut.dmic.webcollector.plugin.berkeley;
 
 import cn.edu.hfut.dmic.webcollector.crawldb.Generator;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
-import cn.edu.hfut.dmic.webcollector.util.Config;
-import com.sleepycat.je.Cursor;
-import com.sleepycat.je.CursorConfig;
-import com.sleepycat.je.Database;
-import com.sleepycat.je.DatabaseEntry;
-import com.sleepycat.je.Environment;
-import com.sleepycat.je.EnvironmentConfig;
-import com.sleepycat.je.LockMode;
-import com.sleepycat.je.OperationStatus;
-
-import java.io.File;
-
+import com.sleepycat.je.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,11 +29,11 @@ import org.slf4j.LoggerFactory;
 public class BerkeleyGenerator extends Generator {
 
     public static final Logger LOG = LoggerFactory.getLogger(BerkeleyGenerator.class);
-
+    protected DatabaseEntry key = new DatabaseEntry();
+    protected DatabaseEntry value = new DatabaseEntry();
     Cursor cursor = null;
     Database crawldbDatabase = null;
     Environment env = null;
-
 
     public BerkeleyGenerator(Environment env) {
         this.env = env;
@@ -52,13 +41,12 @@ public class BerkeleyGenerator extends Generator {
         cursor = crawldbDatabase.openCursor(null, CursorConfig.DEFAULT);
     }
 
-
     @Override
     public CrawlDatum nextWithoutFilter() throws Exception {
         if (cursor.getNext(key, value, LockMode.DEFAULT) == OperationStatus.SUCCESS) {
             CrawlDatum datum = BerkeleyDBUtils.createCrawlDatum(key, value);
             return datum;
-        }else{
+        } else {
             return null;
         }
     }
@@ -73,9 +61,6 @@ public class BerkeleyGenerator extends Generator {
             crawldbDatabase.close();
         }
     }
-
-    protected DatabaseEntry key = new DatabaseEntry();
-    protected DatabaseEntry value = new DatabaseEntry();
 
 //    @Override
 //    public CrawlDatum next() {
@@ -119,5 +104,5 @@ public class BerkeleyGenerator extends Generator {
 //        }
 //    }
 
-   
+
 }

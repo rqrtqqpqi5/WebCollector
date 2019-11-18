@@ -20,7 +20,6 @@ package cn.edu.hfut.dmic.webcollector.util;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- *
  * @author hu
  */
 public class Counter {
@@ -29,24 +28,25 @@ public class Counter {
     public Counter() {
         this(0);
     }
-    
+
     public Counter(int initValue) {
-        data=new AtomicInteger(initValue);
+        data = new AtomicInteger(initValue);
     }
-    
-    public int inc(){
+
+    public int inc() {
         return data.incrementAndGet();
     }
-    public int inc(int num){
+
+    public int inc(int num) {
         return data.addAndGet(num);
     }
-    
-    public void set(int value){
+
+    public void set(int value) {
         data.set(value);
     }
-    
-    public int get(){
+
+    public int get() {
         return data.get();
     }
-    
+
 }

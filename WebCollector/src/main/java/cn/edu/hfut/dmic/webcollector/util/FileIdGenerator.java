@@ -27,35 +27,36 @@ public class FileIdGenerator {
     protected File baseDir;
     protected AtomicInteger lastId;
 
-    public void initLastId(){
+    public FileIdGenerator(File baseDir) {
+        this.baseDir = baseDir;
+        initLastId();
+
+    }
+
+    public FileIdGenerator(String baseDirPath) {
+        this(new File(baseDirPath));
+    }
+
+    public static void main(String[] args) {
+        FileIdGenerator generator = new FileIdGenerator("test");
+        for (int i = 0; i < 100; i++) {
+            System.out.println(generator.generate());
+        }
+    }
+
+    public void initLastId() {
         lastId = new AtomicInteger(-1);
-        if(baseDir.exists()){
-            for(File file:baseDir.listFiles()){
+        if (baseDir.exists()) {
+            for (File file : baseDir.listFiles()) {
                 int id = Integer.valueOf(file.getName().split("\\.")[0]);
-                if(id > lastId.get()){
+                if (id > lastId.get()) {
                     lastId.set(id);
                 }
             }
         }
     }
 
-    public int generate(){
+    public int generate() {
         return lastId.incrementAndGet();
-    }
-
-    public FileIdGenerator(File baseDir) {
-        this.baseDir = baseDir;
-        initLastId();
-
-    }
-    public FileIdGenerator(String baseDirPath){
-        this(new File(baseDirPath));
-    }
-
-    public static void main(String[] args) {
-        FileIdGenerator generator = new FileIdGenerator("test");
-        for(int i=0;i<100;i++){
-            System.out.println(generator.generate());
-        }
     }
 }

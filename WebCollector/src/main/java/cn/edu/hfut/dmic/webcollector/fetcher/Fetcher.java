@@ -17,12 +17,14 @@
  */
 package cn.edu.hfut.dmic.webcollector.fetcher;
 
+import cn.edu.hfut.dmic.webcollector.conf.CommonConfigured;
 import cn.edu.hfut.dmic.webcollector.crawldb.DBManager;
 import cn.edu.hfut.dmic.webcollector.crawldb.Generator;
 import cn.edu.hfut.dmic.webcollector.crawldb.GeneratorFilter;
-import cn.edu.hfut.dmic.webcollector.conf.CommonConfigured;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -31,42 +33,34 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import cn.edu.hfut.dmic.webcollector.util.ConfigurationUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * 抓取器
  *
  * @author hu
  */
-public class Fetcher extends CommonConfigured{
+public class Fetcher extends CommonConfigured {
 
     public static final Logger LOG = LoggerFactory.getLogger(Fetcher.class);
-
+    /**
+     *
+     */
+    public static final int FETCH_SUCCESS = 1;
+    /**
+     *
+     */
+    public static final int FETCH_FAILED = 2;
     public DBManager dbManager;
-
     public Executor executor;
     public NextFilter nextFilter = null;
-
+    volatile boolean running;
     private AtomicInteger activeThreads;
     private AtomicInteger startedThreads;
     private AtomicInteger spinWaiting;
     private AtomicLong lastRequestStart;
     private QueueFeeder feeder = null;
     private FetchQueue fetchQueue = null;
-
-    /**
-     *
-     */
-    public static final int FETCH_SUCCESS = 1;
-
-    /**
-     *
-     */
-    public static final int FETCH_FAILED = 2;
-    private int threads = 50;
     //private boolean isContentStored = false;
+    private int threads = 50;
 
     public Executor getExecutor() {
         return executor;
@@ -74,221 +68,6 @@ public class Fetcher extends CommonConfigured{
 
     public void setExecutor(Executor executor) {
         this.executor = executor;
-    }
-
-    /**
-     *
-     */
-    public static class FetchItem {
-
-        public CrawlDatum datum;
-
-        public FetchItem(CrawlDatum datum) {
-            this.datum = datum;
-        }
-    }
-
-    public static class FetchQueue {
-
-        public AtomicInteger totalSize = new AtomicInteger(0);
-
-        public final List<FetchItem> queue = Collections.synchronizedList(new LinkedList<FetchItem>());
-
-        public void clear() {
-            queue.clear();
-        }
-
-        public int getSize() {
-            return queue.size();
-        }
-
-        public synchronized void addFetchItem(FetchItem item) {
-            if (item == null) {
-                return;
-            }
-            queue.add(item);
-            totalSize.incrementAndGet();
-        }
-
-        public synchronized FetchItem getFetchItem() {
-            if (queue.isEmpty()) {
-                return null;
-            }
-            return queue.remove(0);
-        }
-
-        public synchronized void dump() {
-            for (int i = 0; i < queue.size(); i++) {
-                FetchItem it = queue.get(i);
-                LOG.info("  " + i + ". " + it.datum.url());
-            }
-
-        }
-
-    }
-
-    public static class QueueFeeder extends Thread {
-
-        public FetchQueue queue;
-
-        public DBManager dbManager;
-        public Generator generator = null;
-        public GeneratorFilter generatorFilter = null;
-        public int size;
-
-        public QueueFeeder(FetchQueue queue, DBManager dbManager, GeneratorFilter generatorFilter, int size) {
-            this.queue = queue;
-            this.dbManager = dbManager;
-            this.generatorFilter = generatorFilter;
-            this.size = size;
-        }
-
-        public void stopFeeder(){
-            running = false;
-            while (this.isAlive()) {
-                try {
-                    Thread.sleep(1000);
-                    LOG.info("stopping feeder......");
-                } catch (InterruptedException ex) {
-                }
-            }
-        }
-
-        public void closeGenerator() throws Exception {
-            if(generator!=null) {
-                generator.close();
-                LOG.info("close generator:" + generator.getClass().getName());
-            }
-        }
-
-        public volatile boolean running = true;
-
-        @Override
-        public void run(){
-
-            generator = dbManager.createGenerator(generatorFilter);
-            LOG.info("create generator:" + generator.getClass().getName());
-            String generatorFilterClassName = (generatorFilter==null)?"null":generatorFilter.getClass().getName();
-            LOG.info("use generatorFilter:" + generatorFilterClassName);
-
-            boolean hasMore = true;
-            running = true;
-            while (hasMore && running) {
-
-                int feed = size - queue.getSize();
-                if (feed <= 0) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                    }
-                    continue;
-                }
-                while (feed > 0 && hasMore && running) {
-
-                    CrawlDatum datum = generator.next();
-                    hasMore = (datum != null);
-
-                    if (hasMore) {
-                        queue.addFetchItem(new FetchItem(datum));
-                        feed--;
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-    private class FetcherThread extends Thread {
-
-        @Override
-        public void run() {
-            startedThreads.incrementAndGet();
-            activeThreads.incrementAndGet();
-            FetchItem item = null;
-            try {
-
-                while (running) {
-                    try {
-                        item = fetchQueue.getFetchItem();
-                        if (item == null) {
-                            if (feeder.isAlive() || fetchQueue.getSize() > 0) {
-                                spinWaiting.incrementAndGet();
-
-                                try {
-                                    Thread.sleep(500);
-                                } catch (Exception ex) {
-                                }
-
-                                spinWaiting.decrementAndGet();
-                                continue;
-                            } else {
-                                return;
-                            }
-                        }
-
-                        lastRequestStart.set(System.currentTimeMillis());
-
-                        CrawlDatum crawlDatum = item.datum;
-                        //String url = crawlDatum.getUrl();
-                        //Page page = getPage(crawlDatum);
-
-                        //crawlDatum.incrRetry(page.getRetry());
-//                        crawlDatum.setFetchTime(System.currentTimeMillis());
-                        CrawlDatums next = new CrawlDatums();
-                        try {
-                            executor.execute(crawlDatum, next);
-                            if (nextFilter != null) {
-                                CrawlDatums filteredNext = new CrawlDatums();
-                                for (int i = 0; i < next.size(); i++) {
-                                    CrawlDatum filterResult = nextFilter.filter(next.get(i), crawlDatum);
-                                    if (filterResult != null) {
-                                        filteredNext.add(filterResult);
-                                    }
-                                }
-                                next = filteredNext;
-                            }
-                            LOG.info("done: " + crawlDatum.briefInfo());
-                            crawlDatum.setStatus(CrawlDatum.STATUS_DB_SUCCESS);
-                        } catch (Exception ex) {
-                            LOG.info("failed: " + crawlDatum.briefInfo(), ex);
-                            crawlDatum.setStatus(CrawlDatum.STATUS_DB_FAILED);
-                        }
-
-                        crawlDatum.incrExecuteCount(1);
-                        crawlDatum.setExecuteTime(System.currentTimeMillis());
-                        try {
-                            dbManager.writeFetchSegment(crawlDatum);
-                            if (crawlDatum.getStatus() == CrawlDatum.STATUS_DB_SUCCESS && !next.isEmpty()) {
-                                dbManager.writeParseSegment(next);
-                            }
-                        } catch (Exception ex) {
-                            LOG.info("Exception when updating db", ex);
-                        }
-                        long executeInterval = getConf().getExecuteInterval();
-                        if (executeInterval > 0) {
-                            try {
-                                Thread.sleep(executeInterval);
-                            } catch (Exception sleepEx) {
-                            }
-                        }
-
-                    } catch (Exception ex) {
-                        LOG.info("Exception", ex);
-                    }
-                }
-
-            } catch (Exception ex) {
-                LOG.info("Exception", ex);
-
-            } finally {
-                activeThreads.decrementAndGet();
-            }
-
-        }
-
     }
 
     /**
@@ -373,7 +152,7 @@ public class Fetcher extends CommonConfigured{
             feeder.stopFeeder();
             fetchQueue.clear();
         } finally {
-            if(feeder!=null) {
+            if (feeder != null) {
                 feeder.closeGenerator();
             }
             dbManager.closeSegmentWriter();
@@ -381,8 +160,6 @@ public class Fetcher extends CommonConfigured{
         }
         return feeder.generator.getTotalGenerate();
     }
-
-    volatile boolean running;
 
     /**
      * 停止爬取
@@ -417,7 +194,6 @@ public class Fetcher extends CommonConfigured{
         this.dbManager = dbManager;
     }
 
-
     public NextFilter getNextFilter() {
         return nextFilter;
     }
@@ -425,7 +201,209 @@ public class Fetcher extends CommonConfigured{
     public void setNextFilter(NextFilter nextFilter) {
         this.nextFilter = nextFilter;
     }
-    
-    
+
+    /**
+     *
+     */
+    public static class FetchItem {
+
+        public CrawlDatum datum;
+
+        public FetchItem(CrawlDatum datum) {
+            this.datum = datum;
+        }
+    }
+
+    public static class FetchQueue {
+
+        public final List<FetchItem> queue = Collections.synchronizedList(new LinkedList<FetchItem>());
+        public AtomicInteger totalSize = new AtomicInteger(0);
+
+        public void clear() {
+            queue.clear();
+        }
+
+        public int getSize() {
+            return queue.size();
+        }
+
+        public synchronized void addFetchItem(FetchItem item) {
+            if (item == null) {
+                return;
+            }
+            queue.add(item);
+            totalSize.incrementAndGet();
+        }
+
+        public synchronized FetchItem getFetchItem() {
+            if (queue.isEmpty()) {
+                return null;
+            }
+            return queue.remove(0);
+        }
+
+        public synchronized void dump() {
+            for (int i = 0; i < queue.size(); i++) {
+                FetchItem it = queue.get(i);
+                LOG.info("  " + i + ". " + it.datum.url());
+            }
+
+        }
+
+    }
+
+    public static class QueueFeeder extends Thread {
+
+        public FetchQueue queue;
+
+        public DBManager dbManager;
+        public Generator generator = null;
+        public GeneratorFilter generatorFilter = null;
+        public int size;
+        public volatile boolean running = true;
+
+        public QueueFeeder(FetchQueue queue, DBManager dbManager, GeneratorFilter generatorFilter, int size) {
+            this.queue = queue;
+            this.dbManager = dbManager;
+            this.generatorFilter = generatorFilter;
+            this.size = size;
+        }
+
+        public void stopFeeder() {
+            running = false;
+            while (this.isAlive()) {
+                try {
+                    Thread.sleep(1000);
+                    LOG.info("stopping feeder......");
+                } catch (InterruptedException ex) {
+                }
+            }
+        }
+
+        public void closeGenerator() throws Exception {
+            if (generator != null) {
+                generator.close();
+                LOG.info("close generator:" + generator.getClass().getName());
+            }
+        }
+
+        @Override
+        public void run() {
+            generator = dbManager.createGenerator(generatorFilter);
+            LOG.info("create generator:" + generator.getClass().getName());
+            String generatorFilterClassName = (generatorFilter == null) ? "null" : generatorFilter.getClass().getName();
+            LOG.info("use generatorFilter:" + generatorFilterClassName);
+
+            boolean hasMore = true;
+            running = true;
+            while (hasMore && running) {
+
+                int feed = size - queue.getSize();
+                if (feed <= 0) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                    continue;
+                }
+                while (feed > 0 && hasMore && running) {
+
+                    CrawlDatum datum = generator.next();
+                    hasMore = (datum != null);
+
+                    if (hasMore) {
+                        queue.addFetchItem(new FetchItem(datum));
+                        feed--;
+                    }
+                }
+            }
+        }
+    }
+
+    private class FetcherThread extends Thread {
+
+        @Override
+        public void run() {
+            startedThreads.incrementAndGet();
+            activeThreads.incrementAndGet();
+            FetchItem item = null;
+            try {
+
+                while (running) {
+                    try {
+                        item = fetchQueue.getFetchItem();
+                        if (item == null) {
+                            if (feeder.isAlive() || fetchQueue.getSize() > 0) {
+                                spinWaiting.incrementAndGet();
+
+                                try {
+                                    Thread.sleep(500);
+                                } catch (Exception ex) {
+                                }
+
+                                spinWaiting.decrementAndGet();
+                                continue;
+                            } else {
+                                return;
+                            }
+                        }
+
+                        lastRequestStart.set(System.currentTimeMillis());
+
+                        CrawlDatum crawlDatum = item.datum;
+                        CrawlDatums next = new CrawlDatums();
+                        try {
+                            executor.execute(crawlDatum, next);
+                            if (nextFilter != null) {
+                                CrawlDatums filteredNext = new CrawlDatums();
+                                for (int i = 0; i < next.size(); i++) {
+                                    CrawlDatum filterResult = nextFilter.filter(next.get(i), crawlDatum);
+                                    if (filterResult != null) {
+                                        filteredNext.add(filterResult);
+                                    }
+                                }
+                                next = filteredNext;
+                            }
+                            LOG.info("done: " + crawlDatum.briefInfo());
+                            crawlDatum.setStatus(CrawlDatum.STATUS_DB_SUCCESS);
+                        } catch (Exception ex) {
+                            LOG.info("failed: " + crawlDatum.briefInfo(), ex);
+                            crawlDatum.setStatus(CrawlDatum.STATUS_DB_FAILED);
+                        }
+
+                        crawlDatum.incrExecuteCount(1);
+                        crawlDatum.setExecuteTime(System.currentTimeMillis());
+                        try {
+                            dbManager.writeFetchSegment(crawlDatum);
+                            if (crawlDatum.getStatus() == CrawlDatum.STATUS_DB_SUCCESS && !next.isEmpty()) {
+                                dbManager.writeParseSegment(next);
+                            }
+                        } catch (Exception ex) {
+                            LOG.info("Exception when updating db", ex);
+                        }
+                        long executeInterval = getConf().getExecuteInterval();
+                        if (executeInterval > 0) {
+                            try {
+                                Thread.sleep(executeInterval);
+                            } catch (Exception sleepEx) {
+                            }
+                        }
+
+                    } catch (Exception ex) {
+                        LOG.info("Exception", ex);
+                    }
+                }
+
+            } catch (Exception ex) {
+                LOG.info("Exception", ex);
+
+            } finally {
+                activeThreads.decrementAndGet();
+            }
+
+        }
+
+    }
+
 
 }

@@ -19,10 +19,12 @@ package cn.edu.hfut.dmic.webcollector.plugin.nextfilter;
 
 import cn.edu.hfut.dmic.webcollector.fetcher.NextFilter;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
+
 import java.util.HashSet;
 
 /**
  * Filter nextItem whose key is contained in the hashset
+ *
  * @author hu
  */
 public class HashSetNextFilter extends HashSet<String> implements NextFilter {

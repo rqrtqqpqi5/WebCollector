@@ -20,6 +20,13 @@ package cn.edu.hfut.dmic.webcollector.net;
 import cn.edu.hfut.dmic.webcollector.conf.Configuration;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,26 +38,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author hu
  */
-public class HttpRequest{
+public class HttpRequest {
 
     public static final Logger LOG = LoggerFactory.getLogger(HttpRequest.class);
 
+    static {
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkClientTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                }
+        };
+
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception ex) {
+            LOG.info("Exception", ex);
+        }
+    }
 
     protected Configuration defaultConf = Configuration.getDefault();
-
     protected int MAX_REDIRECT = defaultConf.getMaxRedirect();
-
     protected int MAX_RECEIVE_SIZE = defaultConf.getMaxReceiveSize();
     protected String method = "GET";
     protected boolean doinput = true;
@@ -58,13 +81,12 @@ public class HttpRequest{
     protected boolean followRedirects = false;
     protected int timeoutForConnect = defaultConf.getConnectTimeout();
     protected int timeoutForRead = defaultConf.getReadTimeout();
-    protected byte[] outputData=null;
+    protected byte[] outputData = null;
     protected String userAgent = defaultConf.getDefaultUserAgent();
-    Proxy proxy = null;
-
     protected Map<String, List<String>> headerMap = null;
 
     protected CrawlDatum crawlDatum = null;
+    Proxy proxy = null;
 
     public HttpRequest(String url) throws Exception {
         this.crawlDatum = new CrawlDatum(url);
@@ -83,7 +105,7 @@ public class HttpRequest{
         this.proxy = proxy;
     }
 
-    public Page responsePage() throws Exception{
+    public Page responsePage() throws Exception {
         HttpResponse response = response();
         Page page = new Page(
                 crawlDatum,
@@ -95,10 +117,9 @@ public class HttpRequest{
         return page;
     }
 
-
     public HttpResponse response() throws Exception {
         URL url = new URL(crawlDatum.url());
-        if(userAgent!=null){
+        if (userAgent != null) {
             setUserAgent(userAgent);
         }
         HttpResponse response = new HttpResponse(url);
@@ -116,9 +137,9 @@ public class HttpRequest{
                 }
 
                 config(con);
-                
-                if(outputData!=null){
-                    OutputStream os=con.getOutputStream();
+
+                if (outputData != null) {
+                    OutputStream os = con.getOutputStream();
                     os.write(outputData);
                     os.close();
                 }
@@ -128,15 +149,15 @@ public class HttpRequest{
                 if (redirect == 0) {
                     response.code(code);
                 }
-                
-                if(code==HttpURLConnection.HTTP_NOT_FOUND){
+
+                if (code == HttpURLConnection.HTTP_NOT_FOUND) {
                     response.setNotFound(true);
                     return response;
                 }
 
                 boolean needBreak = false;
                 switch (code) {
-                        
+
                     case HttpURLConnection.HTTP_MOVED_PERM:
                     case HttpURLConnection.HTTP_MOVED_TEMP:
                         response.setRedirect(true);
@@ -229,7 +250,7 @@ public class HttpRequest{
     }
 
     public void setMethod(String method) {
-        this.method=method;
+        this.method = method;
     }
 
     public CrawlDatum getCrawlDatum() {
@@ -240,40 +261,10 @@ public class HttpRequest{
         this.crawlDatum = crawlDatum;
     }
 
-    static {
-        TrustManager[] trustAllCerts = new TrustManager[]{
-            new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-
-                public void checkClientTrusted(
-                        java.security.cert.X509Certificate[] certs, String authType) {
-                }
-
-                public void checkServerTrusted(
-                        java.security.cert.X509Certificate[] certs, String authType) {
-                }
-            }
-        };
-
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (Exception ex) {
-            LOG.info("Exception", ex);
-        }
-    }
-
     private void initHeaderMap() {
         if (headerMap == null) {
             headerMap = new HashMap<String, List<String>>();
         }
-    }
-
-    public void setUserAgent(String userAgent) {
-        setHeader("User-Agent", userAgent);
     }
 
     public void setCookie(String cookie) {
@@ -334,8 +325,6 @@ public class HttpRequest{
     public void setMAX_RECEIVE_SIZE(int MAX_RECEIVE_SIZE) {
         this.MAX_RECEIVE_SIZE = MAX_RECEIVE_SIZE;
     }
-
-   
 
     public Map<String, List<String>> getHeaders() {
         return headerMap;
@@ -420,15 +409,18 @@ public class HttpRequest{
         return outputData;
     }
 
+    public void setOutputData(byte[] outputData) {
+        this.outputData = outputData;
+        this.dooutput = true;
+    }
+
     public String getUserAgent() {
         return userAgent;
     }
 
-    public void setOutputData(byte[] outputData) {
-        this.outputData = outputData;
-        this.dooutput=true;
+    public void setUserAgent(String userAgent) {
+        setHeader("User-Agent", userAgent);
     }
-    
-    
+
 
 }

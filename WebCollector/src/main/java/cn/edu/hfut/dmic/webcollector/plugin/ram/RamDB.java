@@ -18,17 +18,15 @@
 package cn.edu.hfut.dmic.webcollector.plugin.ram;
 
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
+
 import java.util.HashMap;
 
 
-
-
 /**
- *
  * @author hu
  */
 public class RamDB {
-    
+
     protected HashMap<String, CrawlDatum> crawlDB = new HashMap<String, CrawlDatum>();
     protected HashMap<String, CrawlDatum> fetchDB = new HashMap<String, CrawlDatum>();
     protected HashMap<String, CrawlDatum> linkDB = new HashMap<String, CrawlDatum>();

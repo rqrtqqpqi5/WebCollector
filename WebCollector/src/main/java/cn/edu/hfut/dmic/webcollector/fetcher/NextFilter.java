@@ -20,20 +20,18 @@ package cn.edu.hfut.dmic.webcollector.fetcher;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 
 /**
- *
  * @author hu
  */
 public interface NextFilter {
     /**
-     * 
      * if the crawler visit http://a.com/ and detect http://a.com/b.html
      * then nextItem = http://a.com/b.html and referer = http://a.com/
      * if you want to filter nextItem, return null
      * else you should return nextItem
-     * 
+     *
      * @param nextItem one of the detected crawldatums
-     * @param referer the crawldatum of the page where nextItem is detected
-     * @return 
+     * @param referer  the crawldatum of the page where nextItem is detected
+     * @return
      */
     public CrawlDatum filter(CrawlDatum nextItem, CrawlDatum referer);
 }

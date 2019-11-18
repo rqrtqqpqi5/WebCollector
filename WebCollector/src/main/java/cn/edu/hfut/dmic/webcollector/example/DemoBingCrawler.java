@@ -21,28 +21,29 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.ram.RamCrawler;
-import java.net.URLEncoder;
-import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.net.URLEncoder;
 
 /**
  * 本教程演示了WebCollector 2.20的新特性:
- *  1)MetaData:
- *    MetaData是每个爬取任务的附加信息,灵活应用MetaData可以大大简化爬虫的设计.
- *    例如Post请求往往需要包含参数，而传统爬虫单纯使用URL来保存参数的方法不适合复杂的POST请求.
- *    一些爬取任务希望获取遍历树的深度信息，这也可以通过MetaData轻松实现，可参见教程DemoDepthCrawler
- *    
- *  2)RamCrawler:
- *    RamCrawler不需要依赖文件系统或数据库，适合一次性的爬取任务.
- *    如果希望编写长期任务，请使用BreadthCrawler.
- * 
+ * 1)MetaData:
+ * MetaData是每个爬取任务的附加信息,灵活应用MetaData可以大大简化爬虫的设计.
+ * 例如Post请求往往需要包含参数，而传统爬虫单纯使用URL来保存参数的方法不适合复杂的POST请求.
+ * 一些爬取任务希望获取遍历树的深度信息，这也可以通过MetaData轻松实现，可参见教程DemoDepthCrawler
+ * <p>
+ * 2)RamCrawler:
+ * RamCrawler不需要依赖文件系统或数据库，适合一次性的爬取任务.
+ * 如果希望编写长期任务，请使用BreadthCrawler.
+ * <p>
  * 本教程实现了一个爬取Bing搜索前n页结果的爬虫，爬虫的结果直接输出到标准输出流
  * 如果希望将爬取结果输出到ArrayList等数据结构中，在类中定义一个ArrayList的成员变量，
  * 输出时将结果插入ArrayList即可，这里需要注意的是爬虫是多线程的，而ArrayList不是线程
  * 安全的，因此在执行插入操作时，可使用synchronized(this){ //插入操作}的方式上锁保证安全。
- * 
+ * <p>
  * 本教程中对Bing搜索的解析规则可能会随Bing搜索的改版而失效
- * 
+ *
  * @author hu
  */
 public class DemoBingCrawler extends RamCrawler {
@@ -57,6 +58,28 @@ public class DemoBingCrawler extends RamCrawler {
                     .meta("depth", 1);
             addSeed(datum);
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+
+
+        DemoBingCrawler crawler = new DemoBingCrawler("网络爬虫", 3);
+        crawler.start();
+
+    }
+
+    /**
+     * 根据关键词和页号拼接Bing搜索对应的URL
+     *
+     * @param keyword 关键词
+     * @param pageNum 页号
+     * @return 对应的URL
+     * @throws Exception 异常
+     */
+    public static String createBingUrl(String keyword, int pageNum) throws Exception {
+        int first = pageNum * 10 - 9;
+        keyword = URLEncoder.encode(keyword, "utf-8");
+        return String.format("http://cn.bing.com/search?q=%s&first=%s", keyword, first);
     }
 
     @Override
@@ -91,10 +114,10 @@ public class DemoBingCrawler extends RamCrawler {
         } else if (page.matchType("outlink")) {
 
             int rank = page.metaAsInt("rank");
-            String referer=page.meta("referer");
+            String referer = page.meta("referer");
 
             String line = String.format("第%s页第%s个结果:%s(%s字节)\tdepth=%s\treferer=%s",
-                    pageNum, rank + 1, page.doc().title(),page.content().length,depth, referer);
+                    pageNum, rank + 1, page.doc().title(), page.content().length, depth, referer);
             System.out.println(line);
 
         }
@@ -110,27 +133,6 @@ public class DemoBingCrawler extends RamCrawler {
         的depth+1即可。
          */
         next.meta("depth", depth + 1).meta("referer", page.url());
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        
-        DemoBingCrawler crawler = new DemoBingCrawler("网络爬虫", 3);
-        crawler.start();
-
-    }
-
-    /**
-     * 根据关键词和页号拼接Bing搜索对应的URL
-     * @param keyword 关键词
-     * @param pageNum 页号
-     * @return 对应的URL
-     * @throws Exception 异常 
-     */
-    public static String createBingUrl(String keyword, int pageNum) throws Exception {
-        int first = pageNum * 10 - 9;
-        keyword = URLEncoder.encode(keyword, "utf-8");
-        return String.format("http://cn.bing.com/search?q=%s&first=%s", keyword, first);
     }
 
 }

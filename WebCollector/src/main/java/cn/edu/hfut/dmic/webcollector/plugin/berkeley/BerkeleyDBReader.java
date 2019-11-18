@@ -18,31 +18,24 @@
 package cn.edu.hfut.dmic.webcollector.plugin.berkeley;
 
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
-import com.sleepycat.je.Cursor;
-import com.sleepycat.je.CursorConfig;
-import com.sleepycat.je.Database;
-import com.sleepycat.je.DatabaseEntry;
-import com.sleepycat.je.Environment;
-import com.sleepycat.je.EnvironmentConfig;
-import com.sleepycat.je.LockMode;
-import com.sleepycat.je.OperationStatus;
-import java.io.File;
+import com.sleepycat.je.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 /**
- *
  * @author hu
  */
 public class BerkeleyDBReader {
 
     public static final Logger LOG = LoggerFactory.getLogger(BerkeleyDBReader.class);
     public String crawlPath;
-
+    protected DatabaseEntry key = new DatabaseEntry();
+    protected DatabaseEntry value = new DatabaseEntry();
     Cursor cursor = null;
     Database crawldbDatabase = null;
     Environment env = null;
-
     public BerkeleyDBReader(String crawlPath) {
         this.crawlPath = crawlPath;
         File dir = new File(crawlPath);
@@ -52,9 +45,6 @@ public class BerkeleyDBReader {
         crawldbDatabase = env.openDatabase(null, "crawldb", BerkeleyDBUtils.defaultDBConfig);
         cursor = crawldbDatabase.openCursor(null, CursorConfig.DEFAULT);
     }
-
-    protected DatabaseEntry key = new DatabaseEntry();
-    protected DatabaseEntry value = new DatabaseEntry();
 
     public CrawlDatum next() throws Exception {
         if (cursor.getNext(key, value, LockMode.DEFAULT) == OperationStatus.SUCCESS) {
@@ -77,5 +67,5 @@ public class BerkeleyDBReader {
             env.close();
         }
     }
-    
+
 }

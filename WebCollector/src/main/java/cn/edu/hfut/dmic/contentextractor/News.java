@@ -20,7 +20,6 @@ package cn.edu.hfut.dmic.contentextractor;
 import org.jsoup.nodes.Element;
 
 /**
- *
  * @author hu
  */
 public class News {
@@ -56,8 +55,7 @@ public class News {
         }
         return content;
     }
-    
-    
+
 
     public void setContent(String content) {
         this.content = content;
@@ -84,5 +82,5 @@ public class News {
         this.contentElement = contentElement;
     }
 
-   
+
 }

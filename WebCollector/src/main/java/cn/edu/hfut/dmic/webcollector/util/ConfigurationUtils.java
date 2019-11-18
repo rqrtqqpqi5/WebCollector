@@ -1,6 +1,5 @@
 package cn.edu.hfut.dmic.webcollector.util;
 
-import cn.edu.hfut.dmic.webcollector.conf.Configuration;
 import cn.edu.hfut.dmic.webcollector.conf.Configured;
 
 public class ConfigurationUtils {
@@ -11,9 +10,9 @@ public class ConfigurationUtils {
 //        }
 //    }
 
-    public static void setTo(Configured from, Object... targets){
-        for(Object target:targets){
-            if(target instanceof Configured){
+    public static void setTo(Configured from, Object... targets) {
+        for (Object target : targets) {
+            if (target instanceof Configured) {
                 Configured configuredTarget = (Configured) target;
                 configuredTarget.setConf(from.getConf());
             }

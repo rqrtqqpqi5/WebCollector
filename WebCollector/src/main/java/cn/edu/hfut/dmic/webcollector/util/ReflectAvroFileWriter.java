@@ -10,13 +10,13 @@ import org.apache.avro.reflect.ReflectDatumWriter;
 import java.io.File;
 import java.io.IOException;
 
-public class ReflectAvroFileWriter<T>{
+public class ReflectAvroFileWriter<T> {
 
     protected DataFileWriter<T> writer;
     protected Schema schema;
 
     public ReflectAvroFileWriter(File file, Class<T> _class) throws IOException {
-        this(file,_class,false);
+        this(file, _class, false);
     }
 
     public ReflectAvroFileWriter(File file, Class<T> _class, boolean append) throws IOException {
@@ -25,9 +25,9 @@ public class ReflectAvroFileWriter<T>{
         writer = new DataFileWriter<T>(datumWriter)
                 .setCodec(CodecFactory.deflateCodec(9));
 
-        if(append && file.exists()){
+        if (append && file.exists()) {
             writer = writer.appendTo(file);
-        }else{
+        } else {
             writer = writer.create(schema, file);
         }
     }
@@ -42,6 +42,7 @@ public class ReflectAvroFileWriter<T>{
             writer.flush();
         }
     }
+
     public void flush() throws IOException {
         writer.flush();
     }

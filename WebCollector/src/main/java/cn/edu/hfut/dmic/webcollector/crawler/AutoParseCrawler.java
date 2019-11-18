@@ -32,10 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author hu
  */
-public abstract class AutoParseCrawler extends Crawler implements Executor, Visitor, Requester{
+public abstract class AutoParseCrawler extends Crawler implements Executor, Visitor, Requester {
 
     public static final Logger LOG = LoggerFactory.getLogger(AutoParseCrawler.class);
 
@@ -45,6 +44,10 @@ public abstract class AutoParseCrawler extends Crawler implements Executor, Visi
     protected boolean autoParse = true;
     protected Visitor visitor;
     protected Requester requester;
+    /**
+     * URL正则约束
+     */
+    protected RegexRule regexRule = new RegexRule();
 
     public AutoParseCrawler(boolean autoParse) {
         this.autoParse = autoParse;
@@ -65,12 +68,6 @@ public abstract class AutoParseCrawler extends Crawler implements Executor, Visi
         ConfigurationUtils.setTo(this, requester);
         ConfigurationUtils.setTo(this, visitor);
     }
-
-
-    /**
-     * URL正则约束
-     */
-    protected RegexRule regexRule = new RegexRule();
 
     @Override
     public void execute(CrawlDatum datum, CrawlDatums next) throws Exception {
@@ -108,7 +105,6 @@ public abstract class AutoParseCrawler extends Crawler implements Executor, Visi
     }
 
     /**
-     *
      * @return 返回是否自动抽取符合正则的链接并加入后续任务
      */
     public boolean isAutoParse() {
@@ -168,5 +164,5 @@ public abstract class AutoParseCrawler extends Crawler implements Executor, Visi
         this.requester = requester;
     }
 
-    
+
 }

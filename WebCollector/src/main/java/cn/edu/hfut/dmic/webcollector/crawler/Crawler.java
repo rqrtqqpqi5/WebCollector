@@ -18,15 +18,14 @@
 package cn.edu.hfut.dmic.webcollector.crawler;
 
 import cn.edu.hfut.dmic.webcollector.conf.DefaultConfigured;
+import cn.edu.hfut.dmic.webcollector.crawldb.DBManager;
 import cn.edu.hfut.dmic.webcollector.crawldb.GeneratorFilter;
 import cn.edu.hfut.dmic.webcollector.crawldb.StatusGeneratorFilter;
-import cn.edu.hfut.dmic.webcollector.fetcher.NextFilter;
 import cn.edu.hfut.dmic.webcollector.fetcher.Executor;
 import cn.edu.hfut.dmic.webcollector.fetcher.Fetcher;
-import cn.edu.hfut.dmic.webcollector.crawldb.DBManager;
+import cn.edu.hfut.dmic.webcollector.fetcher.NextFilter;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatum;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
-
 import cn.edu.hfut.dmic.webcollector.util.ConfigurationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,38 +36,33 @@ import org.slf4j.LoggerFactory;
 public class Crawler extends DefaultConfigured {
 
     public static final Logger LOG = LoggerFactory.getLogger(Crawler.class);
-
+    public final static int RUNNING = 1;
+    public final static int STOPED = 2;
+    protected int status;
+    protected boolean resumable = false;
+    protected int threads = 50;
+    protected CrawlDatums seeds = new CrawlDatums();
+    protected CrawlDatums forcedSeeds = new CrawlDatums();
+    protected Fetcher fetcher;
+    protected int maxExecuteCount = -1;
+    protected Executor executor = null;
+    protected NextFilter nextFilter = null;
+    protected DBManager dbManager;
+    protected GeneratorFilter generatorFilter = new StatusGeneratorFilter();
     public Crawler() {
 
     }
-
     /**
      * 根据任务管理器和执行器构造爬虫
      *
      * @param dbManager 任务管理器
-     * @param executor 执行器
+     * @param executor  执行器
      */
     public Crawler(DBManager dbManager, Executor executor) {
         this.dbManager = dbManager;
         this.executor = executor;
     }
 
-    protected int status;
-    public final static int RUNNING = 1;
-    public final static int STOPED = 2;
-    protected boolean resumable = false;
-    protected int threads = 50;
-
-
-    protected CrawlDatums seeds = new CrawlDatums();
-    protected CrawlDatums forcedSeeds = new CrawlDatums();
-    protected Fetcher fetcher;
-    protected int maxExecuteCount = -1;
-
-    protected Executor executor = null;
-    protected NextFilter nextFilter = null;
-    protected DBManager dbManager;
-    protected GeneratorFilter generatorFilter = new StatusGeneratorFilter();
     protected void inject() throws Exception {
         dbManager.inject(seeds);
     }
@@ -78,7 +72,7 @@ public class Crawler extends DefaultConfigured {
     }
 
 
-    protected void registerOtherConfigurations(){
+    protected void registerOtherConfigurations() {
     }
 
 
@@ -127,7 +121,7 @@ public class Crawler extends DefaultConfigured {
             long startTime = System.currentTimeMillis();
             fetcher = new Fetcher();
             //register fetcher conf
-            ConfigurationUtils.setTo(this,fetcher);
+            ConfigurationUtils.setTo(this, fetcher);
 
             fetcher.setDBManager(dbManager);
             fetcher.setExecutor(executor);
@@ -148,7 +142,7 @@ public class Crawler extends DefaultConfigured {
         afterStop();
     }
 
-    public void afterStop(){
+    public void afterStop() {
 
     }
 
@@ -167,28 +161,27 @@ public class Crawler extends DefaultConfigured {
      * @param force 如果添加的种子是已爬取的任务，当force为true时，会强制注入种子，当force为false时，会忽略该种子
      */
     public void addSeed(CrawlDatum datum, boolean force) {
-        addSeedAndReturn(datum,force);
+        addSeedAndReturn(datum, force);
     }
 
     /**
-         * 等同于 addSeed(datum, false)
-         *
-         * @param datum 种子任务
-         */
+     * 等同于 addSeed(datum, false)
+     *
+     * @param datum 种子任务
+     */
     public void addSeed(CrawlDatum datum) {
         addSeedAndReturn(datum);
     }
-
 
 
     /**
      * 添加种子集合
      *
      * @param datums 种子集合
-     * @param force 如果添加的种子是已爬取的任务，当force为true时，会强制注入种子，当force为false时，会忽略该种子
+     * @param force  如果添加的种子是已爬取的任务，当force为true时，会强制注入种子，当force为false时，会忽略该种子
      */
     public void addSeed(CrawlDatums datums, boolean force) {
-        addSeedAndReturn(datums,force);
+        addSeedAndReturn(datums, force);
     }
 
     /**
@@ -204,7 +197,7 @@ public class Crawler extends DefaultConfigured {
      * 与addSeed(CrawlDatums datums, boolean force) 类似
      *
      * @param links 种子URL集合
-     * @param type 种子的type标识信息
+     * @param type  种子的type标识信息
      * @param force 是否强制注入
      */
     public void addSeed(Iterable<String> links, String type, boolean force) {
@@ -218,7 +211,7 @@ public class Crawler extends DefaultConfigured {
      * @param force 是否强制注入
      */
     public void addSeed(Iterable<String> links, boolean force) {
-        addSeedAndReturn(links,force);
+        addSeedAndReturn(links, force);
     }
 
 
@@ -235,7 +228,7 @@ public class Crawler extends DefaultConfigured {
      * 与addSeed(CrawlDatums datums)类似
      *
      * @param links 种子URL集合
-     * @param type 种子的type标识信息
+     * @param type  种子的type标识信息
      */
     public void addSeed(Iterable<String> links, String type) {
         addSeedAndReturn(links).type(type);
@@ -245,32 +238,30 @@ public class Crawler extends DefaultConfigured {
     /**
      * 与addSeed(CrawlDatum datum, boolean force)类似
      *
-     * @param url 种子URL
-     * @param type 种子的type标识信息
+     * @param url   种子URL
+     * @param type  种子的type标识信息
      * @param force 是否强制注入
      */
     public void addSeed(String url, String type, boolean force) {
-        addSeedAndReturn(url,force).type(type);
+        addSeedAndReturn(url, force).type(type);
     }
 
     /**
      * 与addSeed(CrawlDatum datum, boolean force)类似
      *
-     * @param url 种子URL
+     * @param url   种子URL
      * @param force 是否强制注入
      */
     public void addSeed(String url, boolean force) {
-        addSeedAndReturn(url,force);
+        addSeedAndReturn(url, force);
     }
-
-
 
 
     /**
      * 与addSeed(CrawlDatum datum)类似
      *
      * @param type 种子的type标识信息
-     * @param url 种子URL
+     * @param url  种子URL
      */
     public void addSeed(String url, String type) {
         addSeedAndReturn(url).type(type);
@@ -295,25 +286,25 @@ public class Crawler extends DefaultConfigured {
     }
 
     public CrawlDatum addSeedAndReturn(CrawlDatum datum) {
-        return addSeedAndReturn(datum,false);
+        return addSeedAndReturn(datum, false);
     }
 
     public CrawlDatum addSeedAndReturn(String url, boolean force) {
         CrawlDatum datum = new CrawlDatum(url);
-        return addSeedAndReturn(datum,force);
+        return addSeedAndReturn(datum, force);
     }
 
     public CrawlDatum addSeedAndReturn(String url) {
-        return addSeedAndReturn(url,false);
+        return addSeedAndReturn(url, false);
     }
 
     public CrawlDatums addSeedAndReturn(Iterable<String> links, boolean force) {
         CrawlDatums datums = new CrawlDatums(links);
-        return addSeedAndReturn(datums,force);
+        return addSeedAndReturn(datums, force);
     }
 
     public CrawlDatums addSeedAndReturn(Iterable<String> links) {
-        return addSeedAndReturn(links,false);
+        return addSeedAndReturn(links, false);
     }
 
     public CrawlDatums addSeedAndReturn(CrawlDatums datums, boolean force) {
@@ -326,7 +317,7 @@ public class Crawler extends DefaultConfigured {
     }
 
     public CrawlDatums addSeedAndReturn(CrawlDatums datums) {
-        return addSeedAndReturn(datums,false);
+        return addSeedAndReturn(datums, false);
     }
 
 

@@ -15,8 +15,8 @@ public class BerkeleyDBManagerTest {
     @Test
     public void testInject() throws Exception {
         ArrayList<String> urlList = new ArrayList<String>();
-        for(int i = 0;i<10;i++){
-            urlList.add("https://www.google.com/"+i);
+        for (int i = 0; i < 10; i++) {
+            urlList.add("https://www.google.com/" + i);
         }
 
         BerkeleyDBManager dbManager = new BerkeleyDBManager("temp_test_crawldb");
@@ -25,7 +25,7 @@ public class BerkeleyDBManagerTest {
         Generator generator = dbManager.createGenerator();
         CrawlDatum datum;
         HashSet<String> generatedUrls = new HashSet<String>();
-        while((datum = generator.next())!=null){
+        while ((datum = generator.next()) != null) {
             String url = datum.url();
             assertTrue(urlList.contains(url));
             generatedUrls.add(url);

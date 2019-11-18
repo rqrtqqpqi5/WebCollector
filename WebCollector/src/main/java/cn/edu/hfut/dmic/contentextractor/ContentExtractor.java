@@ -18,12 +18,6 @@
 package cn.edu.hfut.dmic.contentextractor;
 
 import cn.edu.hfut.dmic.webcollector.net.HttpRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,6 +27,13 @@ import org.jsoup.select.Elements;
 import org.jsoup.select.NodeVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * ContentExtractor could extract content,title,time from news webpage
@@ -44,25 +45,97 @@ public class ContentExtractor {
     public static final Logger LOG = LoggerFactory.getLogger(ContentExtractor.class);
 
     protected Document doc;
+    protected HashMap<Element, CountInfo> infoMap = new HashMap<Element, CountInfo>();
 
     ContentExtractor(Document doc) {
         this.doc = doc;
     }
 
-    protected HashMap<Element, CountInfo> infoMap = new HashMap<Element, CountInfo>();
+    /*输入Jsoup的Document，获取正文所在Element*/
+    public static Element getContentElementByDoc(Document doc) throws Exception {
+        ContentExtractor ce = new ContentExtractor(doc);
+        return ce.getContentElement();
+    }
 
-    class CountInfo {
+    /*输入HTML，获取正文所在Element*/
+    public static Element getContentElementByHtml(String html) throws Exception {
+        Document doc = Jsoup.parse(html);
+        return getContentElementByDoc(doc);
+    }
 
-        int textCount = 0;
-        int linkTextCount = 0;
-        int tagCount = 0;
-        int linkTagCount = 0;
-        double density = 0;
-        double densitySum = 0;
-        double score = 0;
-        int pCount = 0;
-        ArrayList<Integer> leafList = new ArrayList<Integer>();
+    /*输入HTML和URL，获取正文所在Element*/
+    public static Element getContentElementByHtml(String html, String url) throws Exception {
+        Document doc = Jsoup.parse(html, url);
+        return getContentElementByDoc(doc);
+    }
 
+    /*输入URL，获取正文所在Element*/
+    public static Element getContentElementByUrl(String url) throws Exception {
+        HttpRequest request = new HttpRequest(url);
+        String html = request.response().decode();
+        return getContentElementByHtml(html, url);
+    }
+
+    /*输入Jsoup的Document，获取正文文本*/
+    public static String getContentByDoc(Document doc) throws Exception {
+        ContentExtractor ce = new ContentExtractor(doc);
+        return ce.getContentElement().text();
+    }
+
+    /*输入HTML，获取正文文本*/
+    public static String getContentByHtml(String html) throws Exception {
+        Document doc = Jsoup.parse(html);
+        return getContentElementByDoc(doc).text();
+    }
+
+    /*输入HTML和URL，获取正文文本*/
+    public static String getContentByHtml(String html, String url) throws Exception {
+        Document doc = Jsoup.parse(html, url);
+        return getContentElementByDoc(doc).text();
+    }
+
+    /*输入URL，获取正文文本*/
+    public static String getContentByUrl(String url) throws Exception {
+        HttpRequest request = new HttpRequest(url);
+        String html = request.response().decode();
+        return getContentByHtml(html, url);
+    }
+
+    /*输入Jsoup的Document，获取结构化新闻信息*/
+    public static News getNewsByDoc(Document doc) throws Exception {
+        ContentExtractor ce = new ContentExtractor(doc);
+        return ce.getNews();
+    }
+
+    /*输入HTML，获取结构化新闻信息*/
+    public static News getNewsByHtml(String html) throws Exception {
+        Document doc = Jsoup.parse(html);
+        return getNewsByDoc(doc);
+    }
+
+    /*输入HTML和URL，获取结构化新闻信息*/
+    public static News getNewsByHtml(String html, String url) throws Exception {
+        Document doc = Jsoup.parse(html, url);
+        return getNewsByDoc(doc);
+    }
+
+    /*输入URL，获取结构化新闻信息*/
+    public static News getNewsByUrl(String url) throws Exception {
+        HttpRequest request = new HttpRequest(url);
+        String html = request.response().decode();
+        return getNewsByHtml(html, url);
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        News news = ContentExtractor.getNewsByUrl("http://www.huxiu.com/article/121959/1.html");
+        System.out.println(news.getUrl());
+        System.out.println(news.getTitle());
+        System.out.println(news.getTime());
+        System.out.println(news.getContent());
+        //System.out.println(news.getContentElement());
+
+        //System.out.println(news);
     }
 
     protected void clean() {
@@ -325,7 +398,7 @@ public class ContentExtractor {
         Elements titles = doc.body().select("*[id^=title],*[id$=title],*[class^=title],*[class$=title]");
         if (titles.size() > 0) {
             String title = titles.first().text();
-            if (title.length() > 5 && title.length()<40) {
+            if (title.length() > 5 && title.length() < 40) {
                 return titles.first().text();
             }
         }
@@ -431,91 +504,18 @@ public class ContentExtractor {
         return dp[len1][len2];
     }
 
-    /*输入Jsoup的Document，获取正文所在Element*/
-    public static Element getContentElementByDoc(Document doc) throws Exception {
-        ContentExtractor ce = new ContentExtractor(doc);
-        return ce.getContentElement();
-    }
+    class CountInfo {
 
-    /*输入HTML，获取正文所在Element*/
-    public static Element getContentElementByHtml(String html) throws Exception {
-        Document doc = Jsoup.parse(html);
-        return getContentElementByDoc(doc);
-    }
+        int textCount = 0;
+        int linkTextCount = 0;
+        int tagCount = 0;
+        int linkTagCount = 0;
+        double density = 0;
+        double densitySum = 0;
+        double score = 0;
+        int pCount = 0;
+        ArrayList<Integer> leafList = new ArrayList<Integer>();
 
-    /*输入HTML和URL，获取正文所在Element*/
-    public static Element getContentElementByHtml(String html, String url) throws Exception {
-        Document doc = Jsoup.parse(html, url);
-        return getContentElementByDoc(doc);
-    }
-
-    /*输入URL，获取正文所在Element*/
-    public static Element getContentElementByUrl(String url) throws Exception {
-        HttpRequest request = new HttpRequest(url);
-        String html = request.response().decode();
-        return getContentElementByHtml(html, url);
-    }
-
-    /*输入Jsoup的Document，获取正文文本*/
-    public static String getContentByDoc(Document doc) throws Exception {
-        ContentExtractor ce = new ContentExtractor(doc);
-        return ce.getContentElement().text();
-    }
-
-    /*输入HTML，获取正文文本*/
-    public static String getContentByHtml(String html) throws Exception {
-        Document doc = Jsoup.parse(html);
-        return getContentElementByDoc(doc).text();
-    }
-
-    /*输入HTML和URL，获取正文文本*/
-    public static String getContentByHtml(String html, String url) throws Exception {
-        Document doc = Jsoup.parse(html, url);
-        return getContentElementByDoc(doc).text();
-    }
-
-    /*输入URL，获取正文文本*/
-    public static String getContentByUrl(String url) throws Exception {
-        HttpRequest request = new HttpRequest(url);
-        String html = request.response().decode();
-        return getContentByHtml(html, url);
-    }
-
-    /*输入Jsoup的Document，获取结构化新闻信息*/
-    public static News getNewsByDoc(Document doc) throws Exception {
-        ContentExtractor ce = new ContentExtractor(doc);
-        return ce.getNews();
-    }
-
-    /*输入HTML，获取结构化新闻信息*/
-    public static News getNewsByHtml(String html) throws Exception {
-        Document doc = Jsoup.parse(html);
-        return getNewsByDoc(doc);
-    }
-
-    /*输入HTML和URL，获取结构化新闻信息*/
-    public static News getNewsByHtml(String html, String url) throws Exception {
-        Document doc = Jsoup.parse(html, url);
-        return getNewsByDoc(doc);
-    }
-
-    /*输入URL，获取结构化新闻信息*/
-    public static News getNewsByUrl(String url) throws Exception {
-        HttpRequest request = new HttpRequest(url);
-        String html = request.response().decode();
-        return getNewsByHtml(html, url);
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        News news = ContentExtractor.getNewsByUrl("http://www.huxiu.com/article/121959/1.html");
-        System.out.println(news.getUrl());
-        System.out.println(news.getTitle());
-        System.out.println(news.getTime());
-        System.out.println(news.getContent());
-        //System.out.println(news.getContentElement());
-
-        //System.out.println(news);
     }
 
 }
